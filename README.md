@@ -1,4 +1,4 @@
-# Item Management System (Round)
+# Item Management System 
 
 A full-stack ASP.NET MVC application for managing hierarchical item structures with weight validation and user authentication.
 
