@@ -1,0 +1,30 @@
+@model Round.Models.User
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="row justify-content-center" style="margin-top: 100px;">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header text-center">
+                <h4>System Login</h4>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <label>Email</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

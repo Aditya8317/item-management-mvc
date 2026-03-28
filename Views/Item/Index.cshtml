@@ -1,0 +1,61 @@
+@model List<Round.Models.Item>
+@{
+    ViewBag.Title = "Items";
+}
+
+<div class="row mb-4">
+    <div class="col">
+        <h2>Items</h2>
+    </div>
+    <div class="col text-right">
+        <a href="@Url.Action("Create", "Item")" class="btn btn-primary">Add New</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("Index", "Item", FormMethod.Get, new { @class = "form-inline mb-3" }))
+        {
+            <input type="text" name="searchTerm" class="form-control mr-2" placeholder="Search..." value="@ViewBag.SearchTerm" />
+            <button type="submit" class="btn btn-secondary">Search</button>
+        }
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Weight</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ItemName</td>
+                        <td>@item.Weight</td>
+                        <td>
+                            @if (item.IsProcessed)
+                            {
+                                <span class="badge badge-success">Processed</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-warning">Pending</span>
+                            }
+                        </td>
+                        <td>
+                            @if (!item.IsProcessed)
+                            {
+                                <a href="@Url.Action("Process", "Process", new { id = item.ItemId })" class="btn btn-sm btn-info">Process</a>
+                            }
+                            <a href="@Url.Action("Edit", "Item", new { id = item.ItemId })" class="btn btn-sm btn-light">Edit</a>
+                            <a href="@Url.Action("Delete", "Item", new { id = item.ItemId })" class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

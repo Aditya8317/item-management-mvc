@@ -1,0 +1,78 @@
+:root {
+    --primary: #4e73df;
+    --primary-dark: #224abe;
+    --secondary: #858796;
+    --success: #1cc88a;
+    --info: #36b9cc;
+    --warning: #f6c23e;
+    --danger: #e74a3b;
+    --light: #f8f9fc;
+    --dark: #5a5c69;
+}
+
+body {
+    background-color: #f8f9fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #5a5c69;
+}
+
+.navbar {
+    background-color: #4e73df;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    color: #fff !important;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+    margin-bottom: 30px;
+}
+
+.card-header {
+    background-color: #f8f9fc;
+    border-bottom: 1px solid #e3e6f0;
+    font-weight: bold;
+    color: #4e73df;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.table thead th {
+    background-color: #f8f9fc;
+    color: #4e73df;
+}
+
+.tree-view ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.tree-node {
+    padding: 5px 10px;
+    border: 1px solid #e3e6f0;
+    margin: 5px 0;
+    display: inline-block;
+    background: #fff;
+    cursor: pointer;
+}
+
+.badge-processed {
+    background-color: #1cc88a;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.badge-pending {
+    background-color: #f6c23e;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 4px;
+}

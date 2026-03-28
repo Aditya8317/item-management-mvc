@@ -1,0 +1,120 @@
+@model List<Round.Models.ProcessedItemViewModel>
+@{
+    ViewBag.Title = "Processed Items";
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-check-circle"></i> Processed Items</h2>
+    <a href="@Url.Action("Index", "Item")" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Items
+    </a>
+</div>
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var processed in Model)
+    {
+        <div class="card" style="margin-bottom: 1.5rem;">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-cube" style="color: var(--primary-light);"></i>
+                        <strong>@processed.ParentItem.ItemName</strong>
+                        <span style="color: var(--accent-light); margin-left: 10px;">
+                            Weight: @processed.ParentItem.Weight.ToString("F2")
+                        </span>
+                    </div>
+                    <span class="badge-processed">
+                        <i class="fas fa-check"></i> Processed
+                    </span>
+                </div>
+            </div>
+            <div class="card-body">
+                @if (processed.ChildItems != null && processed.ChildItems.Count > 0)
+                {
+                    <h6 style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        <i class="fas fa-sitemap"></i> Generated Child Items (@processed.ChildItems.Count)
+                    </h6>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item Name</th>
+                                    <th>Weight</th>
+                                    <th>Status</th>
+                                    <th>Created Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var child in processed.ChildItems)
+                                {
+                                    <tr>
+                                        <td>
+                                            <i class="fas fa-arrow-right" style="color: var(--text-muted); margin-right: 5px;"></i>
+                                            @child.ItemName
+                                        </td>
+                                        <td style="color: var(--accent-light); font-weight: 600;">
+                                            @child.Weight.ToString("F2")
+                                        </td>
+                                        <td>
+                                            @if (child.IsProcessed)
+                                            {
+                                                <span class="badge-processed"><i class="fas fa-check"></i> Processed</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                                            }
+                                        </td>
+                                        <td>@child.CreatedDate.ToString("MMM dd, yyyy hh:mm tt")</td>
+                                        <td>
+                                            @if (!child.IsProcessed)
+                                            {
+                                                <a href="@Url.Action("Process", "Process", new { id = child.ItemId })"
+                                                   class="btn btn-success btn-sm">
+                                                    <i class="fas fa-cogs"></i> Process
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Weight Summary -->
+                    <div style="text-align: right; padding: 0.5rem 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                        Total Child Weight:
+                        <strong style="color: var(--accent-light);">
+                            @processed.ChildItems.Sum(c => c.Weight).ToString("F2")
+                        </strong>
+                        / @processed.ParentItem.Weight.ToString("F2")
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-state" style="padding: 1.5rem;">
+                        <i class="fas fa-info-circle" style="font-size: 1.5rem;"></i>
+                        <p>No child items generated yet.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-body">
+            <div class="empty-state">
+                <i class="fas fa-clipboard-check"></i>
+                <h4>No Processed Items Yet</h4>
+                <p>Process items from the Items page to see them here.</p>
+                <a href="@Url.Action("Index", "Item")" class="btn btn-primary">
+                    <i class="fas fa-list"></i> Go to Items
+                </a>
+            </div>
+        </div>
+    </div>
+}

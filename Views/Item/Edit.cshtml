@@ -1,0 +1,62 @@
+@model Round.Models.Item
+@{
+    ViewBag.Title = "Edit Item";
+}
+
+<div class="page-header">
+    <h2><i class="fas fa-edit"></i> Edit Item</h2>
+    <a href="@Url.Action("Index", "Item")" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Back to Items
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-pen"></i> Update Item Details
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Edit", "Item", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.ItemId)
+                    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.ItemName)
+                        @Html.TextBoxFor(m => m.ItemName, new { @class = "form-control", placeholder = "Enter item name" })
+                        @Html.ValidationMessageFor(m => m.ItemName)
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Weight)
+                        @Html.TextBoxFor(m => m.Weight, new { @class = "form-control", placeholder = "Enter weight", type = "number", min = "0.01", step = "0.01" })
+                        @Html.ValidationMessageFor(m => m.Weight)
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1rem; padding: 0.8rem; border-radius: 8px; background: rgba(108, 99, 255, 0.05);">
+                        <small style="color: var(--text-muted);">
+                            <i class="fas fa-info-circle"></i>
+                            Item ID: <strong>@Model.ItemId</strong> |
+                            Created: <strong>@Model.CreatedDate.ToString("MMM dd, yyyy hh:mm tt")</strong>
+                            @if (Model.IsProcessed)
+                            {
+                                <text>| Status: <span class="badge-processed" style="font-size: 0.75rem;"><i class="fas fa-check"></i> Processed</span></text>
+                            }
+                        </small>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Update Item
+                        </button>
+                        <a href="@Url.Action("Index", "Item")" class="btn btn-secondary" style="margin-left: 0.5rem;">
+                            Cancel
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
